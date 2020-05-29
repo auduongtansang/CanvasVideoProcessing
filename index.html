@@ -6,6 +6,39 @@
     <title>Edge Detection</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script>
+        window.onload = function () {
+            var canvas1 = document.getElementById("myCanvas1");
+            var context1 = canvas1.getContext("2d");
+
+            var canvas2 = document.getElementById("myCanvas2");
+            var context2 = canvas2.getContext("2d");
+
+            var video = document.getElementById("myVideo");
+
+            video.onloadeddata = function () {
+                var vid = this;
+
+                canvas1.width = canvas2.width = vid.videoWidth;
+                canvas1.height = canvas2.height = vid.videoHeight;
+            };
+
+            video.onplay = function () {
+                var vid = this;
+
+                (function loop() {
+                    if (!vid.paused && !vid.ended) {
+                        context1.drawImage(vid, 0, 0);
+
+                        var frameData = context1.getImageData(0, 0, vid.videoWidth, vid.videoHeight);
+                        context2.putImageData(frameData, 0, 0);
+
+                        setTimeout(loop, 1000 / 30);
+                    }
+                })();
+            };
+        };
+    </script>
 </head>
 
 <body>
