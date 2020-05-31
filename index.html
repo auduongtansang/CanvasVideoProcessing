@@ -12,7 +12,7 @@
 <body style="background-image:url('bg.jpg');background-size:cover;height:100vh;">
     <div class="container">
 
-        <div class="row mt-3">
+        <div class="row mt-5">
             <div class="col-md-12 text-center">
                 <h1>VIDEO EDGE DETECTION</h1>
             </div>
@@ -26,7 +26,7 @@
 
         <div class="row mt-3">
             <div class="col-md-12 d-flex justify-content-center">
-                <video id="myVideo" src="coffee.mp4" controls></video>
+                <video id="myVideo" src="coffee.mp4" style="display:none;" muted loop></video>
             </div>
         </div>
 
@@ -39,12 +39,18 @@
             </div>
         </div>
 
-	<div class="row mt-3 d-flex justify-content-center">
+        <div class="row mt-3 d-flex justify-content-center">
             <div class="col-md-5">
                 <div class="row d-flex justify-content-center" style="align-items:center;">
                     <input type="text" class="form-control-plaintext col-md-3" value="Intensity:" readonly>
                     <input type="range" class="custom-range col-md-6" id="intensity" min="0" max="500" value="250">
                 </div>
+            </div>
+        </div>
+
+        <div class="row mt-3 d-flex justify-content-center">
+            <div class="col-md-3 d-flex justify-content-center">
+                <button type="button" id="myButton" class="btn btn-primary" disabled>Play</button>
             </div>
         </div>
 
