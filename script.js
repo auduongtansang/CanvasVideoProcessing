@@ -5,9 +5,15 @@ window.onload = function () {
     var canvas2 = document.getElementById("myCanvas2");
     var context2 = canvas2.getContext("2d");
 
+    var threshold = 250;
+    var slider = document.getElementById("intensity");
+    slider.oninput = function () {
+        threshold = 500 - parseInt(slider.value);
+    };
+
     var video = document.getElementById("myVideo");
 
-    video.onloadeddata = function () {
+    video.oncanplay = function () {
         var vid = this;
 
         canvas1.width = canvas2.width = vid.videoWidth;
@@ -22,7 +28,7 @@ window.onload = function () {
                 context1.drawImage(vid, 0, 0);
 
                 var frameData = context1.getImageData(0, 0, vid.videoWidth, vid.videoHeight);
-                var frameEdge = sobel(frameData, 100);
+                var frameEdge = sobel(frameData, threshold);
 
                 context2.putImageData(frameEdge, 0, 0);
 
