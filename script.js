@@ -87,15 +87,18 @@ function sobel(imgData, th) {
     for (var i = 1; i < row - 1; i += 1)
         for (var j = 1; j < col - 1; j += 1) {
 
-            //Get value of 8 neighbor pixels
-            var topLeft = data[(i - 1) * rowStep + (j - 1) * colStep + 1];
-            var top = data[(i - 1) * rowStep + j * colStep + 1];
-            var topRight = data[(i - 1) * rowStep + (j + 1) * colStep + 1];
-            var right = data[i * rowStep + (j + 1) * colStep + 1];
-            var bottomRight = data[(i + 1) * rowStep + (j + 1) * colStep + 1];
-            var bottom = data[(i + 1) * rowStep + j * colStep + 1];
-            var bottomLeft = data[(i + 1) * rowStep + (j - 1) * colStep + 1];
-            var left = data[i * rowStep + (j - 1) * colStep + 1];
+            //Current position
+            var center = i * rowStep + j * colStep;
+
+            //Get value of 8 neighbor pixels (green channel)
+            var topLeft = data[center - rowStep - colStep + 1];
+            var top = data[center - rowStep + 1];
+            var topRight = data[center - rowStep + colStep + 1];
+            var left = data[center - colStep + 1];
+            var right = data[center + colStep + 1];
+            var bottomLeft = data[center + rowStep - colStep + 1];
+            var bottom = data[center + rowStep + 1];
+            var bottomRight = data[center + rowStep + colStep + 1];
 
             //Calculate the gradient
             var dx = (topRight - topLeft) + 2 * (right - left) + (bottomRight - bottomLeft);
@@ -103,13 +106,12 @@ function sobel(imgData, th) {
             var grad = Math.sqrt(dx * dx + dy * dy);
 
             //Thresholding
-            var center = i * rowStep + j * colStep;
-            newImgData.data[center + 3] = 255;
-
             if (grad >= th)
                 newImgData.data[center] = newImgData.data[center + 1] = newImgData.data[center + 2] = 255;
             else
                 newImgData.data[center] = newImgData.data[center + 1] = newImgData.data[center + 2] = 0;
+
+            newImgData.data[center + 3] = 255;
         }
 
     return newImgData;
