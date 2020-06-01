@@ -51,6 +51,10 @@ window.onload = function () {
             }
         })();
     };
+
+    video.onended = function () {
+        button.innerHTML = "Play";
+    };
 };
 
 function sobel(imgData, th) {
